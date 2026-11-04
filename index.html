@@ -15,7 +15,7 @@
   /* PASSWORD GATE: visitors type this word to get in (it's shown to them in grey).
      Set it to "" to turn the gate off. Once typed, it stays open until the browser tab is closed. */
   window.GATE = "fidelio";
-  window.GATE_AUDIO = ["media/fidelio-loop.mp3", "media/fidelio.MP3"];   // gate music, looped until the word is typed.
+  window.GATE_AUDIO = ["media/fidelio-final-loop.mp3", "media/fidelio.MP3"];   // gate music, looped until the word is typed.
                                                                          // Tried in order: if one won't load, the next plays. [] for silence.
   try { if (window.GATE && sessionStorage.getItem("gate-open") !== "1") document.documentElement.classList.add("gated"); }
   catch (e) { if (window.GATE) document.documentElement.classList.add("gated"); }
@@ -385,6 +385,36 @@
     .dock-btn { min-width: 0; }
     .dock-btn .home, .dock-btn .sep { display: none !important; }
   }
+  /* big numbers: stats and funds raised */
+  .stat { color: var(--purple-hi); font-weight: 600; white-space: nowrap; }
+  .flush .stat { color: #B9A8FF; }
+  .facts .stat { font-family: var(--display); font-weight: 400; font-size: 1.5em; line-height: 1; letter-spacing: .01em; }
+  .guide span .stat { font-weight: 600; }
+
+  /* Social: the recap block sized to its landscape video, not a full screen of black */
+  .split.split-fit { min-height: 0; align-items: center; }
+  .split.split-fit > .split-text { padding-top: clamp(3rem, 6vw, 5rem); padding-bottom: clamp(3rem, 6vw, 5rem); }
+  .split.split-fit > .split-media { min-height: 0; align-self: center; background: #000; margin-right: var(--gutter); }
+  .grid-section { padding-top: clamp(3rem, 6vw, 4.5rem); padding-bottom: clamp(2rem, 4vw, 3rem); }
+
+  @media (max-width: 900px) {
+    /* landscape films (SPUR, Reverie) stay 16:9 on phones: film on top, words underneath */
+    .flush.flush-169 { height: auto; min-height: 0; display: flex; flex-direction: column; padding-top: 64px; }
+    .flush.flush-169 > .crumbs { position: static; order: -1; padding-top: .75rem; padding-bottom: .75rem; }
+    .flush.flush-169 > .flush-media { position: relative; inset: auto; aspect-ratio: 16 / 9; }
+    .flush.flush-169 > .flush-media > video, .flush.flush-169 > .flush-media > img { object-fit: contain; }
+    .flush.flush-169 > .flush-shade { display: none; }
+    .flush.flush-169 > .flush-inner { position: static; padding-top: 1.5rem; padding-bottom: 2.5rem; }
+    .flush.flush-169 .slot { position: absolute; padding-top: 1.25rem; }
+    .split.split-fit > .split-media { margin-right: 0; aspect-ratio: auto; }
+    /* display titles: a little more room between stacked lines */
+    .flush-title { line-height: .95; font-size: clamp(3rem, 13vw, 4.5rem); }
+    .h-display { line-height: 1; }
+    .profiles-h { font-size: clamp(1.9rem, 10vw, 3rem); overflow-wrap: normal; }
+    .mark-name { line-height: .9; }
+    .flush-sub { line-height: 1.45; }
+  }
+
   /* ---------- password gate (terminal style) ---------- */
   html.gated { overflow: hidden; }
   .gate { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: var(--gutter);
@@ -518,7 +548,7 @@
     setTimeout(end, 650);                      // backstop for a background tab or an iPhone, where the fade can't run
   }
   // waveform: loudness of each music file measured 30 times a second (any other file gets a generic wave)
-  const WAVES = { "fidelio-loop.mp3": "000000012445556666665555544433222221111111379988765555554444456664347987676567742000257665411244200000000147767877877766666665555544433333222221123456766666666666555555677898656767654322222222222222211111111123556665555555554444433332222221111000001456666665554443333222211112588766776654210000012455554433567777666655555456776556677766543221112356666788776656665554444433333332221121111111011111111100110011345666666666665555544433222221111111111356655555554444444333222221111" };
+  const WAVES = { "fidelio-final-loop.mp3": "12111111144455666767666554443332222222222222999997655555454444563433399855853667211113665311113431111111111136779798886867767565554444333332322222235688877777776666555557959964555465322222222222222222222222222236677656555554544443333333222222211111115777776655544433332222222226997667866532111111234544443217879998777665544469754467787665432222225688879999876667566543444333333223222222222222222221222221121123477776777767666554443332222222222222223576655555554444433333222222220" };
   const waveEl = gate.querySelector(".gate-wave"), bars = [];
   for (let i = 0; i < 22; i++) { const b = document.createElement("i"); b.style.setProperty("--i", i); waveEl.appendChild(b); bars.push(b); }
   let waveR;
@@ -663,13 +693,13 @@
   <section class="split" id="about" aria-labelledby="about-h">
     <div class="split-text">
       <h2 class="h-display" id="about-h"><span class="star">***</span>About me</h2>
-      <p class="lead">I'm Akshen Sivakumar. Western University alumnus (BSc, Major in Biology, Minor in General Cinema Studies). The body of work below is a recap of recent projects.</p>
-      <p class="h-sub" id="guide">Projects include&hellip;</p>
+      <p class="lead">I'm Akshen Sivakumar. Western University alumnus (BSc, Major in Biology, Minor in General Cinema Studies).</p>
+      <p class="h-sub" id="guide">The body of work below is a recap of <span class="u">recent projects</span>.</p>
       <ul class="guide">
         <li><a href="#/spur"><strong>SPUR Fashion Show</strong><span>Head of visual production for SOMNIA 2026, a sold-out show.</span></a></li>
-        <li><a href="#/reverie"><strong>Reverie</strong><span>A short film I edited and produced. 2nd place at the 14th annual Film Art RGB Trophy Festival.</span></a></li>
+        <li><a href="#/reverie"><strong>Reverie</strong><span>A short film I edited and produced. <span class="stat">2nd place</span> at the 14th annual Film Art RGB Trophy Festival.</span></a></li>
         <li><a href="#/elitemd"><strong>EliteMD</strong><span>CPSO-compliant marketing for a med spa.</span></a></li>
-        <li><a href="#/social"><strong>My social media</strong><span>A 1.4M-view Las Vegas reel, viral TikTok content, and fashion show recaps.</span></a></li>
+        <li><a href="#/social"><strong>My social media</strong><span>A <span class="stat">1.4M-view</span> Las Vegas reel, viral TikTok content, and fashion show recaps.</span></a></li>
       </ul>
     </div>
     <div class="split-media" data-src="home.group" aria-label="Akshen Sivakumar" data-prompt="A photo or clip of you." data-size="Portrait, 1200 × 1600 or larger"></div>
@@ -679,13 +709,13 @@
   <div class="photo-row home-row" data-row="home"></div>
 
   <!-- 3. SPUR recap: the film, as the finale -->
-  <section class="flush" id="recap" data-src="home.film" data-mobile="home.filmMobile" data-poster="home.poster" data-sound="true" aria-label="SPUR Fashion Show film">
+  <section class="flush flush-169" id="recap" data-src="home.film" data-mobile="home.filmMobile" data-poster="home.poster" data-sound="true" aria-label="SPUR Fashion Show film">
     <div class="flush-media"></div><div class="flush-shade"></div>
     <div class="flush-inner wrap">
       <div>
         <p class="flush-sub" style="margin:0 0 .8rem">Noteworthy project</p>
         <h2 class="flush-title">SPUR Fashion Show</h2>
-        <p class="flush-sub">I led as head executive of visual production for SOMNIA 2026; show raised $70,000 for Ark Aid Mission.</p>
+        <p class="flush-sub">I led as head executive of visual production for SOMNIA 2026; show raised <span class="stat">$70,000</span> for Ark Aid Mission.</p>
       </div>
       <div class="flush-actions">
         <a class="pill pill-purple pill-sm" href="#/spur">See the project</a>
@@ -699,7 +729,7 @@
 <!-- ======================= SPUR ======================= -->
 <div class="page" data-page="spur" data-title="SPUR Fashion Show | Akshen Sivakumar" data-crumb="SPUR Fashion Show" hidden>
 
-  <section class="flush" data-src="spur.film" data-poster="spur.filmPoster" data-sound="true" aria-label="SOMNIA film">
+  <section class="flush flush-169" data-src="spur.film" data-poster="spur.filmPoster" data-sound="true" aria-label="SOMNIA film">
     <div class="flush-media"></div><div class="flush-shade"></div>
     <nav class="crumbs wrap" aria-label="Breadcrumb"><a href="#/">Home</a> &rsaquo; <a href="#/guide">Projects</a> &rsaquo; SPUR Fashion Show</nav>
     <div class="flush-inner wrap">
@@ -721,9 +751,9 @@
       <p>SOMNIA was the 14th annual Spur Fashion Show, held at Mustang Lounge on March 12, 2026, and it sold out. As head of the visual production team, I worked with the show's directors and internal teams to carry one creative vision through every shoot, film and screen.</p>
       <p>The visual production team: Aariz Nathani, Mateo Cannakis, Clarence Wang, Ashwin Krishan and Simon Leone.</p>
       <ul class="facts">
-        <li><strong>6 promotional shoots</strong><span>Time-sensitive shoots through the year</span></li>
+        <li><strong><span class="stat">6</span> promotional shoots</strong><span>Time-sensitive shoots through the year</span></li>
         <li><strong>Show-day livestream</strong><span>Multi-cam on OBS and Zoom</span></li>
-        <li><strong>$70,000 raised</strong><span>For <a href="https://arkaidmission.ca/" target="_blank" rel="noopener">Ark Aid Mission</a></span></li>
+        <li><strong><span class="stat">$70,000</span> raised</strong><span>For <a href="https://arkaidmission.ca/" target="_blank" rel="noopener">Ark Aid Mission</a></span></li>
         <li><strong>Liaison</strong><span>Between the creative team and external partners</span></li>
       </ul>
     </div>
@@ -877,7 +907,7 @@
 
 <!-- ======================= REVERIE ======================= -->
 <div class="page" data-page="reverie" data-title="Reverie | Akshen Sivakumar" data-crumb="Reverie" hidden>
-  <section class="flush" data-src="reverie.cover" data-poster="reverie.poster" data-sound="true" aria-label="Reverie" data-prompt="Drop your Reverie video into the media folder as reverie.mp4 (MP4, H.264). It plays full screen here." data-size="Landscape, 1920 × 1080 or larger">
+  <section class="flush flush-169" data-src="reverie.cover" data-poster="reverie.poster" data-sound="true" aria-label="Reverie" data-prompt="Drop your Reverie video into the media folder as reverie.mp4 (MP4, H.264). It plays full screen here." data-size="Landscape, 1920 × 1080 or larger">
     <div class="flush-media"></div><div class="flush-shade"></div>
     <nav class="crumbs wrap" aria-label="Breadcrumb"><a href="#/">Home</a> &rsaquo; <a href="#/guide">Projects</a> &rsaquo; Reverie</nav>
     <div class="flush-inner wrap">
@@ -903,7 +933,7 @@
   <section class="split" aria-labelledby="rev-role-h">
     <div class="split-text">
       <h2 class="h-display" id="rev-role-h">My role</h2>
-      <p class="lead"><span class="u">Principal editor and producer.</span> Reverie took 2nd place at the 14th annual Film Art RGB Trophy Festival.</p>
+      <p class="lead"><span class="u">Principal editor and producer.</span> Reverie took <span class="stat">2nd place</span> at the 14th annual Film Art RGB Trophy Festival.</p>
       <p class="h-sub">On set</p>
       <ul class="ticks">
         <li><strong>Videographer</strong></li>
@@ -972,7 +1002,7 @@
     <nav class="crumbs wrap" aria-label="Breadcrumb"><a href="#/">Home</a> &rsaquo; <a href="#/guide">Projects</a> &rsaquo; Social media recap</nav>
     <div class="flush-inner wrap">
       <div>
-        <p class="flush-sub" style="margin:0 0 .8rem">Las Vegas reel: 1.4M views on Instagram</p>
+        <p class="flush-sub" style="margin:0 0 .8rem">Las Vegas reel: <span class="stat">1.4M views</span> on Instagram</p>
         <h1 class="flush-title" tabindex="-1">Social media recap</h1>
         <p class="flush-sub">Hook-driven short-form video as @most.wanted.film, written for the Instagram and TikTok algorithms.</p>
       </div>
@@ -988,7 +1018,7 @@
   <section class="split" aria-labelledby="ig-h" data-unless="viral.cover">
     <div class="split-text">
       <h2 class="h-display" id="ig-h">Las Vegas</h2>
-      <p class="lead">1.4M views on Instagram, shot in a camcorder aesthetic.</p>
+      <p class="lead"><span class="stat">1.4M views</span> on Instagram, shot in a camcorder aesthetic.</p>
       <p>A travel reel from Las Vegas, August 2026, with follow-ups from the Sphere and the strip.</p>
     </div>
     <div class="split-media" data-src="viral.vegas" data-prompt="Las Vegas reel (Instagram link)." data-size="Vertical 9:16"></div>
@@ -996,15 +1026,15 @@
 
   <!-- Live previews of your profiles, each framed like a small browser window (set in SITE > viral.profiles) -->
   <section class="grid-section wrap" data-profiles="viral.profiles" aria-labelledby="profiles-h" hidden>
-    <h2 class="h-display profiles-h" id="profiles-h">@most.wanted.film</h2>
+    <h2 class="h-display profiles-h" id="profiles-h">@most.<wbr>wanted.<wbr>film</h2>
     <div class="site-grid"></div>
   </section>
 
-  <section class="split" aria-labelledby="recap-h">
+  <section class="split split-fit" aria-labelledby="recap-h">
     <div class="split-text">
       <h2 class="h-display" id="recap-h">Fashion show recaps</h2>
       <p class="lead">Event recaps made with designers and venues, released as collab posts.</p>
-      <p>My Toronto Fashion Week recaps reached 30K+ views across 14 collaborative videos.</p>
+      <p>My Toronto Fashion Week recaps reached <span class="stat">30K+ views</span> across <span class="stat">14</span> collaborative videos.</p>
     </div>
     <div class="split-media" data-src="viral.recapFeature" data-fit="contain" data-sound="true" aria-label="TITUS Collection runway recap" data-prompt="One recap video (MP4 or Instagram link)." data-size="Any shape"></div>
   </section>
@@ -1017,15 +1047,8 @@
   <section class="split" aria-labelledby="contact-h">
     <div class="split-text">
       <h1 class="h-display" id="contact-h" tabindex="-1">Contact me</h1>
-      <p class="lead">Have a project in mind? Let's get it done.</p>
+      <p class="lead">Let's get it done.</p>
       <p><a href="mailto:akshens@gmail.com" style="font-size:clamp(1.4rem,2.6vw,2rem);text-decoration:none">akshens@gmail.com</a><br><a href="tel:+16479722872" style="text-decoration:none">(647) 972-2872</a></p>
-      <p class="h-sub">I help with</p>
-      <ul class="ticks">
-        <li>Brand shoots and event coverage</li>
-        <li>Campaign concepts and creative direction</li>
-        <li>UGC-style content and short-form editing</li>
-        <li>Pitch decks and brand concepts</li>
-      </ul>
       <p style="margin-top:1rem">Pricing is set per project.</p>
       <div class="actions">
         <a class="pill pill-purple" href="mailto:akshens@gmail.com">Email me</a>
@@ -1040,7 +1063,7 @@
 </main>
 
 <footer class="footer wrap">
-  <a class="footer-cta" href="#/contact"><small>Have a project in mind?</small><strong>Contact me</strong></a>
+  <a class="footer-cta" href="#/contact"><strong>Contact me</strong></a>
   <ul class="footer-links">
     <li><a href="mailto:akshens@gmail.com">akshens@gmail.com</a></li>
     <li><a href="https://www.instagram.com/most.wanted.film/" target="_blank" rel="noopener">Instagram</a></li>
@@ -1383,7 +1406,7 @@ const SITE = {
         view.innerHTML = '<a target="_blank" rel="noopener"><img loading="lazy" decoding="async"></a>';
         $("a", view).href = p.url; $("img", view).src = p.image; $("img", view).alt = (p.site || "Profile") + " profile screenshot";
       } else { const i = $("iframe", view); i.src = src; i.title = (p.site || "Profile") + " profile preview"; }
-      $("figcaption span", f).textContent = p.stat || "";
+      statText($("figcaption span", f), p.stat || "");
       const a = $("figcaption a", f); a.href = p.url; a.textContent = "Open " + (p.site || "profile");
       grid.appendChild(f);
     });
@@ -1427,6 +1450,15 @@ const SITE = {
   function loadEmbedScripts() {
     needScripts.forEach(src => { if (!document.querySelector('script[src="' + src + '"]')) { const s = document.createElement("script"); s.async = true; s.src = src; document.body.appendChild(s); } });
     if (window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
+  }
+
+  // a settings line like "2.3M views on ..." with its number highlighted
+  function statText(el, text) {
+    const m = text.match(/\$?\d[\d,.]*\s?[KMB]?\+?/);
+    if (!m) { el.textContent = text; return; }
+    el.textContent = "";
+    const b = document.createElement("span"); b.className = "stat"; b.textContent = m[0];
+    el.append(text.slice(0, m.index), b, text.slice(m.index + m[0].length));
   }
 
   /* ---------- flush blocks: full-screen films with sound control ---------- */
@@ -1545,7 +1577,8 @@ const SITE = {
   let current = "";
   function firstBlockIsFlush() { const p = pages.find(x => !x.hidden); return p && p.firstElementChild && p.firstElementChild.classList.contains("flush"); }
   function onScroll() {
-    const solidAt = firstBlockIsFlush() ? window.innerHeight - 80 : 0;
+    const first = firstBlockIsFlush() ? pages.find(x => !x.hidden).firstElementChild : null;
+    const solidAt = first ? Math.max(0, first.offsetHeight - 80) : 0;
     bar.classList.toggle("is-solid", solidAt === 0 || window.scrollY > solidAt);
     const showDock = current !== "home" || window.scrollY > window.innerHeight * .6;
     dock.classList.toggle("is-on", showDock);

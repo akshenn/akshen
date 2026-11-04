@@ -31,7 +31,7 @@ Each slot takes one of:
 
 `window.GATE = "fidelio";` near the top of `index.html`. Set it to `""` to turn the gate off.
 It's a styled entrance, not security: the word is shown on screen and visible in the code.
-Gate music: `media/fidelio-loop.mp3`, with `media/fidelio.MP3` as backup (keep the capital `.MP3` exactly).
+Gate music: `media/fidelio-final-loop.mp3`, with `media/fidelio.MP3` as backup (keep the capital `.MP3` exactly).
 The typewriter, power-on and cha-ching sounds are built into `index.html`; volumes are in `const VOL`.
 
 ## Other options (SITE settings)
